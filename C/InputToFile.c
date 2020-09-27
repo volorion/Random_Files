@@ -25,12 +25,17 @@ int ReadInput (char *buff, size_t maxSize)
 int WriteToFile (char *buff, int len)
 {
     FILE *outFile = fopen ("out.txt", "w");
+    if( !outFile )
+    {
+        perror("out.txt");
+        return 0;
+    }
     printf("Writing contents into output file.\n");
     fwrite (buff, len, 1, outFile);
+    fclose(outFile);
 }
 
 int main (void) {
-    int rc;
     char inputBuffer[1024];
 
 	printf("Please input characters (max len of 1024).\n");
@@ -40,7 +45,7 @@ int main (void) {
         printf ("\nNo input\n");
         return EMPTY_INPUT;
     }
-    else if (rc == TOO_LONG) {
+    else if (response == TOO_LONG) {
         printf ("Input too long (max 1024)\n");
         return TOO_LONG;
     }
