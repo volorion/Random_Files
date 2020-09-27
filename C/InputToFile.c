@@ -6,18 +6,17 @@
 
 int ReadInput (char *buff, size_t maxSize)
 {
-	int ch, extra;
-    if (fgets (buff, maxSize, stdin) == NULL)
-	{
+    if (NULL == fgets (buff, maxSize, stdin))
+    {
         return EMPTY_INPUT;
-	}
-
-	long buffSize = strlen(buff) - 1;
-	if(buffSize > maxSize)
+    }
+    
+    long buffSize = strlen(buff) - 1;
+    if(buffSize > maxSize)
     {
         return TOO_LONG;
     }
-
+    
     buff[strlen(buff)-1] = '\0';
     return buffSize;
 }
@@ -35,21 +34,23 @@ int WriteToFile (char *buff, int len)
     fclose(outFile);
 }
 
-int main (void) {
+int main (void) 
+{
     char inputBuffer[1024];
-
-	printf("Please input characters (max len of 1024).\n");
-
-    int response = ReadInput ( inputBuffer, 1024);
-    if (response == EMPTY_INPUT) {
+    printf("Please input characters (max len of 1024).\n");
+    int response = ReadInput (inputBuffer, 1024);
+    
+    if (response == EMPTY_INPUT) 
+    {
         printf ("\nNo input\n");
         return EMPTY_INPUT;
     }
-    else if (response == TOO_LONG) {
+    else if (response == TOO_LONG) 
+    {
         printf ("Input too long (max 1024)\n");
         return TOO_LONG;
     }
-
+    
     WriteToFile(inputBuffer, response);
     printf ("Writing [%s]\n", inputBuffer);
     return 0;
